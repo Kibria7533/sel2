@@ -87,7 +87,7 @@ await axios.post('https://catchops.herokuapp.com/api/register/',{username,email,
 login=async(e)=>{
   e.preventDefault();
   const {email,password}=this.state;
-await axios.post('https://catchops.herokuapp.com/api/login/',{email,password}, {
+await axios.post('https://catchops.herokuapp.com/api/login/',{"username":email,password}, {
   headers: {
     "Content-Type": "application/json",
     Accept: "application/json",
