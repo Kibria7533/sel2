@@ -78,6 +78,7 @@ await axios.post('https://catchops.herokuapp.com/api/register/',{username,email,
   console.log(res)
    alert('You have saccessfully registered')
    this.setState({username:"",email:"",showModal:false})
+   this.props.onClose();
 }).catch(err=>{
   this.setState({username:"",email:"",error:true})
   console.log(err)
@@ -95,6 +96,7 @@ await axios.post('https://catchops.herokuapp.com/api/login/',{"username":email,p
 }).then(res=>{
   console.log(res)
   this.setState({username:"",email:"",showModal:false,})
+  this.props.onClose();
    alert('You have saccesfully logged In')
 }).catch(err=>{
   this.setState({username:"",email:"",error:true})
