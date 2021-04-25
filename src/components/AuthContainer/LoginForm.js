@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import  { Redirect } from 'react-router-dom'
 import axios from "axios"
 import {
   Navbar,
@@ -26,7 +27,9 @@ class LoginForm extends Component {
       password: "",
       confirm_password:"",
       error:false,
-      mode: "login"
+      mode: "login",
+      loggedIn: false
+
     };
   }
 
@@ -35,7 +38,13 @@ class LoginForm extends Component {
       mode
     });
   };
+  componentDidMount(){
+    if(localStorage.getItem('auth')){
+      this.setState({loggedIn:true})
+    }
+  }
   componentDidUpdate(prevProps) {
+   
     if (prevProps.showModal !== this.props.showModal) {
       console.log('ki',this.props.showModal)
       this.setState({mode:this.props.mode,showModal:this.props.showModal,error:false})
@@ -95,7 +104,8 @@ await axios.post('https://catchops.herokuapp.com/api/login/',{"username":email,p
   },
 }).then(res=>{
   console.log(res)
-  this.setState({username:"",email:"",showModal:false,})
+  localStorage.setItem("auth",true)
+  this.setState({username:"",email:"",showModal:false,loggedIn:true})
   this.props.onClose();
    alert('You have saccesfully logged In')
 }).catch(err=>{
@@ -104,6 +114,7 @@ await axios.post('https://catchops.herokuapp.com/api/login/',{"username":email,p
 })
 }
   renderRegister = () => {
+  
     return (
       <div>
         <div>
@@ -279,6 +290,10 @@ await axios.post('https://catchops.herokuapp.com/api/login/',{"username":email,p
   };
 
   render() {
+    if (this.state.loggedIn){
+      // return <Redirect to='https://dreamy-albattani-d61a42.netlify.app/dashboard'  />
+    window.location.assign('https://dreamy-albattani-d61a42.netlify.app/dashboard');
+    }
     return (
       <div>
         <Modal
